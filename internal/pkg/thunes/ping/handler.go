@@ -2,19 +2,27 @@ package ping
 
 import (
 	"encoding/json"
+	"errors"
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/httpClient"
-	"github.com/spf13/viper"
+	"fmt"
 	"net/http"
 )
 
-// check connectivity
-func Send() (*Model, error) {
-	url := viper.GetString("thunes.basicUrl") + "/ping"
-	response, err := httpClient.Do(http.MethodGet, url, nil)
+// Send ping check connectivity
+// 200 + status: ok is connectivity
+func Send(authClient *httpClient.AuthClient) (*Model, error) {
+	url := authClient.BasicUrl + "/ping"
+	response, err := authClient.Do(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, err
 	}
 	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusOK {
+		errorMsg := fmt.Sprintf("ping request error, code: {%d}, message: {%s}",
+			response.StatusCode, response.Status)
+		return nil, errors.New(errorMsg)
+	}
 
 	pingModel := &Model{}
 	err = json.NewDecoder(response.Body).Decode(pingModel)
