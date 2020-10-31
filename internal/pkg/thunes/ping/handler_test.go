@@ -2,14 +2,14 @@ package ping
 
 import (
 	"encoding/json"
+	"fghpdf.me/thunes_homework/internal/pkg/thunes/common"
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/httpClient"
 	"net/http"
-	"net/http/httptest"
 	"testing"
 )
 
 func TestSend(t *testing.T) {
-	service := serverMock()
+	service := common.ServerMock("/ping", pingResponseMock)
 	defer service.Close()
 
 	authClient := &httpClient.AuthClient{
@@ -26,14 +26,6 @@ func TestSend(t *testing.T) {
 	if res.Status != "up" {
 		t.Errorf("expected status up but got %v\n", res.Status)
 	}
-}
-
-func serverMock() *httptest.Server {
-	handler := http.NewServeMux()
-	handler.HandleFunc("/ping", pingResponseMock)
-
-	service := httptest.NewServer(handler)
-	return service
 }
 
 func pingResponseMock(w http.ResponseWriter, r *http.Request) {

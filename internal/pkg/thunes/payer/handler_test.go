@@ -2,18 +2,18 @@ package payer
 
 import (
 	"encoding/json"
+	"fghpdf.me/thunes_homework/internal/pkg/thunes/common"
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/creditParty"
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/httpClient"
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/service"
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/transactionType"
 	"fmt"
 	"net/http"
-	"net/http/httptest"
 	"testing"
 )
 
 func TestList(t *testing.T) {
-	server := serverMock("/v2/money-transfer/payers", listSuccessMock)
+	server := common.ServerMock("/v2/money-transfer/payers", listSuccessMock)
 	defer server.Close()
 
 	authClient := &httpClient.AuthClient{
@@ -34,7 +34,7 @@ func TestList(t *testing.T) {
 		t.Error(err)
 	}
 
-	if res == nil && len(*res) != 5 {
+	if res == nil || len(*res) != 5 {
 		t.Errorf("expected 5 payers but got %d\n", len(*res))
 	}
 
@@ -46,7 +46,7 @@ func TestList(t *testing.T) {
 func TestGetDetail(t *testing.T) {
 	payerId := 1
 	url := fmt.Sprintf("/v2/money-transfer/payers/%d", payerId)
-	server := serverMock(url, getDetailMock)
+	server := common.ServerMock(url, getDetailMock)
 	defer server.Close()
 
 	authClient := &httpClient.AuthClient{
@@ -67,14 +67,6 @@ func TestGetDetail(t *testing.T) {
 	if res.Id != payerId {
 		t.Errorf("expected the payer id is 1 but got %d\n", res.Id)
 	}
-}
-
-func serverMock(url string, mockHandler func(http.ResponseWriter, *http.Request)) *httptest.Server {
-	handler := http.NewServeMux()
-	handler.HandleFunc(url, mockHandler)
-
-	server := httptest.NewServer(handler)
-	return server
 }
 
 func listSuccessMock(w http.ResponseWriter, r *http.Request) {
