@@ -1,10 +1,13 @@
 package transactionType
 
-import "fghpdf.me/thunes_homework/internal/pkg/thunes/creditParty"
+import (
+	"encoding/json"
+	"fghpdf.me/thunes_homework/internal/pkg/thunes/creditParty"
+)
 
 type InfoModel struct {
-	MinimumTransactionAmount       int32                         `json:"minimum_transaction_amount"`
-	MaximumTransactionAmount       int32                         `json:"maximum_transaction_amount"`
+	MinimumTransactionAmount       json.Number                   `json:"minimum_transaction_amount,omitempty"`
+	MaximumTransactionAmount       json.Number                   `json:"maximum_transaction_amount,omitempty"`
 	CreditPartyIdentifiersAccepted [][]string                    `json:"credit_party_identifiers_accepted"`
 	RequiredSendingEntityFields    [][]string                    `json:"required_sending_entity_fields"`
 	RequiredReceivingEntityFields  [][]string                    `json:"required_receiving_entity_fields"`

@@ -93,8 +93,8 @@ func listSuccessMock(w http.ResponseWriter, r *http.Request) {
 			},
 			TransactionTypes: transactionType.Model{
 				C2C: transactionType.InfoModel{
-					MinimumTransactionAmount:       0,
-					MaximumTransactionAmount:       100,
+					MinimumTransactionAmount:       "0",
+					MaximumTransactionAmount:       "100",
 					CreditPartyIdentifiersAccepted: [][]string{{"msisdn"}},
 					RequiredSendingEntityFields:    nil,
 					RequiredReceivingEntityFields:  nil,
@@ -124,8 +124,8 @@ func getDetailMock(w http.ResponseWriter, r *http.Request) {
 		},
 		TransactionTypes: transactionType.Model{
 			C2C: transactionType.InfoModel{
-				MinimumTransactionAmount:       0,
-				MaximumTransactionAmount:       100,
+				MinimumTransactionAmount:       "0",
+				MaximumTransactionAmount:       "100",
 				CreditPartyIdentifiersAccepted: [][]string{{"msisdn"}},
 				RequiredSendingEntityFields:    nil,
 				RequiredReceivingEntityFields:  nil,
