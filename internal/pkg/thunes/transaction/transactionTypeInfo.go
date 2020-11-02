@@ -1,4 +1,4 @@
-package transactionType
+package transaction
 
 import (
 	"encoding/json"

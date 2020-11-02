@@ -1,6 +1,6 @@
-package transactionType
+package transaction
 
-type Model struct {
+type TypeModel struct {
 	C2C InfoModel `json:"C2C"`
 	C2B InfoModel `json:"C2B"`
 	B2C InfoModel `json:"B2C"`

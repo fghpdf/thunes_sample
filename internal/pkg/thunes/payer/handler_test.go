@@ -87,7 +87,7 @@ func listSuccessMock(w http.ResponseWriter, r *http.Request) {
 				Id:   1,
 				Name: "MobileWallet",
 			},
-			TransactionTypes: transaction.Model{
+			TransactionTypes: transaction.TypeModel{
 				C2C: transaction.InfoModel{
 					MinimumTransactionAmount:       "0",
 					MaximumTransactionAmount:       "100",
@@ -121,7 +121,7 @@ func getDetailSuccessMock(w http.ResponseWriter, r *http.Request) {
 			Id:   1,
 			Name: "MobileWallet",
 		},
-		TransactionTypes: transaction.Model{
+		TransactionTypes: transaction.TypeModel{
 			C2C: transaction.InfoModel{
 				MinimumTransactionAmount:       "0",
 				MaximumTransactionAmount:       "100",

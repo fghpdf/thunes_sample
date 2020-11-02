@@ -8,14 +8,14 @@ import (
 )
 
 type Model struct {
-	Id               int               `json:"id"`
-	Name             string            `json:"name"`
-	Precision        int               `json:"precision"` // Number of digits after decimal point
-	Increment        json.Number       `json:"increment"` // Unit of increment for transaction amounts
-	Currency         string            `json:"currency"`  // the currency payer can pay
-	CountryIsoCode   string            `json:"country_iso_code"`
-	Service          service.Model     `json:"service"`
-	TransactionTypes transaction.Model `json:"transaction_types"` // List of transaction types supported with relevant information
+	Id               int                   `json:"id"`
+	Name             string                `json:"name"`
+	Precision        int                   `json:"precision"` // Number of digits after decimal point
+	Increment        json.Number           `json:"increment"` // Unit of increment for transaction amounts
+	Currency         string                `json:"currency"`  // the currency payer can pay
+	CountryIsoCode   string                `json:"country_iso_code"`
+	Service          service.Model         `json:"service"`
+	TransactionTypes transaction.TypeModel `json:"transaction_types"` // List of transaction types supported with relevant information
 }
 
 type ListParams struct {
