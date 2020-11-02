@@ -1,7 +1,6 @@
 package payer
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/httpClient"
@@ -12,12 +11,8 @@ import (
 // List return the list of available payers
 func List(client *httpClient.AuthClient, params *ListParams) (*[]Model, error) {
 	url := client.BasicUrl + "/v2/money-transfer/payers"
-	byteParams, err := json.Marshal(params)
-	if err != nil {
-		return nil, err
-	}
 
-	response, err := client.Do(http.MethodGet, url, bytes.NewReader(byteParams))
+	response, err := client.Get(url, params)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +37,7 @@ func List(client *httpClient.AuthClient, params *ListParams) (*[]Model, error) {
 func GetDetail(client *httpClient.AuthClient, id int) (*Model, error) {
 	url := fmt.Sprintf("%s/v2/money-transfer/payers/%d", client.BasicUrl, id)
 
-	response, err := client.Do(http.MethodGet, url, nil)
+	response, err := client.Get(url, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -1,7 +1,6 @@
 package country
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/httpClient"
@@ -12,12 +11,8 @@ import (
 // List return a list of countries for all money transfer services available for the caller
 func List(client *httpClient.AuthClient, params *ListParams) (*[]Model, error) {
 	url := client.BasicUrl + "/v2/money-transfer/countries"
-	byteParams, err := json.Marshal(params)
-	if err != nil {
-		return nil, err
-	}
 
-	response, err := client.Do(http.MethodGet, url, bytes.NewReader(byteParams))
+	response, err := client.Get(url, params)
 	if err != nil {
 		return nil, err
 	}

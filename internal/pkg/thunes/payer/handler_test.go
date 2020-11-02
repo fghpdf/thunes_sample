@@ -6,9 +6,11 @@ import (
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/creditParty"
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/httpClient"
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/service"
-	"fghpdf.me/thunes_homework/internal/pkg/thunes/transactionType"
+	"fghpdf.me/thunes_homework/internal/pkg/thunes/transaction"
 	"fmt"
 	"net/http"
+	"strconv"
+	"strings"
 	"testing"
 )
 
@@ -23,8 +25,10 @@ func TestList(t *testing.T) {
 	}
 
 	params := &ListParams{
-		Page:           0,
-		PerPage:        50,
+		PageParams: common.PageParams{
+			Page:    0,
+			PerPage: 50,
+		},
 		CountryIsoCode: "CNH",
 		Currency:       "CNY",
 	}
@@ -46,7 +50,7 @@ func TestList(t *testing.T) {
 func TestGetDetail(t *testing.T) {
 	payerId := 1
 	url := fmt.Sprintf("/v2/money-transfer/payers/%d", payerId)
-	server := common.ServerMock(url, getDetailMock)
+	server := common.ServerMock(url, getDetailSuccessMock)
 	defer server.Close()
 
 	authClient := &httpClient.AuthClient{
@@ -83,8 +87,8 @@ func listSuccessMock(w http.ResponseWriter, r *http.Request) {
 				Id:   1,
 				Name: "MobileWallet",
 			},
-			TransactionTypes: transactionType.Model{
-				C2C: transactionType.InfoModel{
+			TransactionTypes: transaction.Model{
+				C2C: transaction.InfoModel{
 					MinimumTransactionAmount:       "0",
 					MaximumTransactionAmount:       "100",
 					CreditPartyIdentifiersAccepted: [][]string{{"msisdn"}},
@@ -102,9 +106,12 @@ func listSuccessMock(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(res)
 }
 
-func getDetailMock(w http.ResponseWriter, r *http.Request) {
+func getDetailSuccessMock(w http.ResponseWriter, r *http.Request) {
+	path := strings.Split(r.URL.Path, "/")
+	id, _ := strconv.Atoi(path[len(path)-1])
+
 	payer := &Model{
-		Id:             1,
+		Id:             id,
 		Name:           "Payer One",
 		Precision:      0,
 		Increment:      "0.01",
@@ -114,8 +121,8 @@ func getDetailMock(w http.ResponseWriter, r *http.Request) {
 			Id:   1,
 			Name: "MobileWallet",
 		},
-		TransactionTypes: transactionType.Model{
-			C2C: transactionType.InfoModel{
+		TransactionTypes: transaction.Model{
+			C2C: transaction.InfoModel{
 				MinimumTransactionAmount:       "0",
 				MaximumTransactionAmount:       "100",
 				CreditPartyIdentifiersAccepted: [][]string{{"msisdn"}},

@@ -12,7 +12,7 @@ import (
 // 200 + status: ok is connectivity
 func Send(authClient *httpClient.AuthClient) (*Model, error) {
 	url := authClient.BasicUrl + "/ping"
-	response, err := authClient.Do(http.MethodGet, url, nil)
+	response, err := authClient.Get(url, nil)
 	if err != nil {
 		return nil, err
 	}

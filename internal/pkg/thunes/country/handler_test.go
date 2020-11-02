@@ -18,10 +18,10 @@ func TestList(t *testing.T) {
 		BasicUrl: server.URL,
 	}
 
-	params := &ListParams{
+	params := &ListParams{PageParams: common.PageParams{
 		Page:    0,
 		PerPage: 50,
-	}
+	}}
 
 	res, err := List(authClient, params)
 	if err != nil {

@@ -19,8 +19,10 @@ func TestList(t *testing.T) {
 	}
 
 	params := &ListParams{
-		Page:           0,
-		PerPage:        50,
+		PageParams: common.PageParams{
+			Page:    0,
+			PerPage: 50,
+		},
 		CountryIsoCode: "CNH",
 	}
 
