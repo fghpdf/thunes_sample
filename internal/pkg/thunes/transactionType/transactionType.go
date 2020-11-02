@@ -1,4 +1,4 @@
-package transaction
+package transactionType
 
 type TypeModel struct {
 	C2C InfoModel `json:"C2C"`

@@ -3,15 +3,12 @@ package common
 import (
 	"github.com/sony/sonyflake"
 	"strconv"
-	"time"
 )
 
 var sf *sonyflake.Sonyflake
 
 func init() {
-	st := sonyflake.Settings{
-		StartTime: time.Now(),
-	}
+	st := sonyflake.Settings{}
 
 	sf = sonyflake.NewSonyflake(st)
 	if sf == nil {

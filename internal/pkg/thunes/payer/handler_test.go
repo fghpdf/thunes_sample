@@ -6,7 +6,7 @@ import (
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/creditParty"
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/httpClient"
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/service"
-	"fghpdf.me/thunes_homework/internal/pkg/thunes/transaction"
+	"fghpdf.me/thunes_homework/internal/pkg/thunes/transactionType"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -87,8 +87,8 @@ func listSuccessMock(w http.ResponseWriter, r *http.Request) {
 				Id:   1,
 				Name: "MobileWallet",
 			},
-			TransactionTypes: transaction.TypeModel{
-				C2C: transaction.InfoModel{
+			TransactionTypes: transactionType.TypeModel{
+				C2C: transactionType.InfoModel{
 					MinimumTransactionAmount:       "0",
 					MaximumTransactionAmount:       "100",
 					CreditPartyIdentifiersAccepted: [][]string{{"msisdn"}},
@@ -121,8 +121,8 @@ func getDetailSuccessMock(w http.ResponseWriter, r *http.Request) {
 			Id:   1,
 			Name: "MobileWallet",
 		},
-		TransactionTypes: transaction.TypeModel{
-			C2C: transaction.InfoModel{
+		TransactionTypes: transactionType.TypeModel{
+			C2C: transactionType.InfoModel{
 				MinimumTransactionAmount:       "0",
 				MaximumTransactionAmount:       "100",
 				CreditPartyIdentifiersAccepted: [][]string{{"msisdn"}},
