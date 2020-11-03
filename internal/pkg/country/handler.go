@@ -2,15 +2,16 @@ package country
 
 import (
 	"fghpdf.me/thunes_homework/internal/pkg/common"
+	"fghpdf.me/thunes_homework/internal/pkg/thunes/country"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 )
 
 func List(c *gin.Context) {
-	thunesClient := common.NewThunesClient()
+	thunesSvc := country.NewServer(common.NewThunesClient())
 
-	svc := NewServer(thunesClient)
+	svc := NewServer(thunesSvc)
 	countries, err := svc.List()
 	if err != nil {
 		log.Errorf("[country][handler][List] error: %v\n", err)

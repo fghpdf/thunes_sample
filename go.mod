@@ -7,10 +7,12 @@ require (
 	github.com/gin-contrib/requestid v0.0.1
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
+	github.com/golang/mock v1.3.1
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/google/go-querystring v1.0.0
 	github.com/google/uuid v1.1.2 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
+	github.com/magiconair/properties v1.8.1
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.7.0
 	github.com/sony/sonyflake v1.0.0

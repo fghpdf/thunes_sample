@@ -23,7 +23,9 @@ func TestList(t *testing.T) {
 		PerPage: 50,
 	}}
 
-	res, err := List(authClient, params)
+	svc := NewServer(authClient)
+
+	res, err := svc.List(params)
 	if err != nil {
 		t.Error(err)
 	}

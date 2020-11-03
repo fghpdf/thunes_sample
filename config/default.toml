@@ -1,2 +1,4 @@
 [thunes]
-basicUrl = "https://api-mt.pre.thunes.com"
+BasicUrl = "https://api-mt.pre.thunes.com"
+APIKey = "98d00d83-f68e-5157-a912-00f94f2e9a89"
+APISecret = "6f35be9c-952d-54a8-8020-99f2b9336d1a"

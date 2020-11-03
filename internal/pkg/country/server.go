@@ -2,7 +2,6 @@ package country
 
 import (
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/country"
-	"fghpdf.me/thunes_homework/internal/pkg/thunes/httpClient"
 	countryLab "github.com/biter777/countries"
 	log "github.com/sirupsen/logrus"
 )
@@ -12,17 +11,17 @@ type Server interface {
 }
 
 type server struct {
-	client *httpClient.AuthClient
+	thunesSvc country.Server
 }
 
-func NewServer(client *httpClient.AuthClient) Server {
+func NewServer(thunesSvc country.Server) Server {
 	return &server{
-		client: client,
+		thunesSvc: thunesSvc,
 	}
 }
 
 func (s *server) List() (*[]ViewModel, error) {
-	countries, err := country.List(s.client, nil)
+	countries, err := s.thunesSvc.List(nil)
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +36,7 @@ func (s *server) List() (*[]ViewModel, error) {
 
 		viewCountry := ViewModel{
 			Name:     country.Name,
-			Currency: country.IsoCode,
+			Currency: info.Currency().Alpha(),
 			Flag:     info.Emoji(),
 		}
 

@@ -8,11 +8,23 @@ import (
 	"net/http"
 )
 
-// List return a list of countries for all money transfer services available for the caller
-func List(client *httpClient.AuthClient, params *ListParams) (*[]Model, error) {
-	url := client.BasicUrl + "/v2/money-transfer/countries"
+type Server interface {
+	List(params *ListParams) (*[]Model, error)
+}
 
-	response, err := client.Get(url, params)
+type server struct {
+	client *httpClient.AuthClient
+}
+
+func NewServer(client *httpClient.AuthClient) Server {
+	return &server{client: client}
+}
+
+// List return a list of countries for all money transfer services available for the caller
+func (s *server) List(params *ListParams) (*[]Model, error) {
+	url := s.client.BasicUrl + "/v2/money-transfer/countries"
+
+	response, err := s.client.Get(url, params)
 	if err != nil {
 		return nil, err
 	}
