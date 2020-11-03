@@ -1,27 +1,28 @@
 package app
 
 import (
+	"fghpdf.me/thunes_homework/internal/pkg/config"
+	"fghpdf.me/thunes_homework/internal/pkg/country"
 	"fghpdf.me/thunes_homework/internal/pkg/ping"
 	"fghpdf.me/thunes_homework/internal/pkg/routers"
-	"fghpdf.me/thunes_homework/internal/pkg/terminal"
+	"log"
 )
 
 func Run() {
-	startTerminalApp()
+	startWebApp()
 }
 
-func startWebApp()  {
+func startWebApp() {
+	config.Init()
 	app := routers.Init()
 
 	router := app.Group("/api")
 
 	router.GET("/connect", ping.Handler)
+	router.GET("/countries", country.List)
 
-	app.Run()
-}
-
-func startTerminalApp()  {
-	app := terminal.Init()
-
-	app.Start()
+	err := app.Run()
+	if err != nil {
+		log.Fatalf("App start error: %v\n", err)
+	}
 }
