@@ -24,6 +24,8 @@ func TestList(t *testing.T) {
 		BasicUrl: server.URL,
 	}
 
+	svc := NewServer(authClient)
+
 	params := &ListParams{
 		PageParams: common.PageParams{
 			Page:    0,
@@ -33,7 +35,7 @@ func TestList(t *testing.T) {
 		Currency:       "CNY",
 	}
 
-	res, err := List(authClient, params)
+	res, err := svc.List(params)
 	if err != nil {
 		t.Error(err)
 	}
@@ -59,7 +61,9 @@ func TestGetDetail(t *testing.T) {
 		BasicUrl: server.URL,
 	}
 
-	res, err := GetDetail(authClient, payerId)
+	svc := NewServer(authClient)
+
+	res, err := svc.GetDetail(payerId)
 	if err != nil {
 		t.Error(err)
 	}

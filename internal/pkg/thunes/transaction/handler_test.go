@@ -25,6 +25,8 @@ func TestCreate(t *testing.T) {
 		BasicUrl: server.URL,
 	}
 
+	svc := NewServer(authClient)
+
 	externalId, err := common.Generate()
 	if err != nil {
 		panic(err)
@@ -54,7 +56,7 @@ func TestCreate(t *testing.T) {
 		ExternalId: externalId,
 	}
 
-	res, err := Create(authClient, quotationId, params)
+	res, err := svc.Create(quotationId, params)
 	if err != nil {
 		t.Error(err)
 	}
@@ -80,7 +82,9 @@ func TestConfirm(t *testing.T) {
 		BasicUrl: server.URL,
 	}
 
-	res, err := Confirm(authClient, transactionId)
+	svc := NewServer(authClient)
+
+	res, err := svc.Confirm(transactionId)
 	if err != nil {
 		t.Error(err)
 	}

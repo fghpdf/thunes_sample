@@ -18,6 +18,8 @@ func TestList(t *testing.T) {
 		BasicUrl: server.URL,
 	}
 
+	svc := NewServer(authClient)
+
 	params := &ListParams{
 		PageParams: common.PageParams{
 			Page:    0,
@@ -26,7 +28,7 @@ func TestList(t *testing.T) {
 		CountryIsoCode: "CNH",
 	}
 
-	res, err := List(authClient, params)
+	res, err := svc.List(params)
 	if err != nil {
 		t.Error(err)
 	}

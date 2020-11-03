@@ -8,11 +8,24 @@ import (
 	"net/http"
 )
 
-// List return the list of available payers
-func List(client *httpClient.AuthClient, params *ListParams) (*[]Model, error) {
-	url := client.BasicUrl + "/v2/money-transfer/payers"
+type Server interface {
+	List(params *ListParams) (*[]Model, error)
+	GetDetail(id int) (*Model, error)
+}
 
-	response, err := client.Get(url, params)
+type server struct {
+	client *httpClient.AuthClient
+}
+
+func NewServer(client *httpClient.AuthClient) Server {
+	return &server{client: client}
+}
+
+// List return the list of available payers
+func (s *server) List(params *ListParams) (*[]Model, error) {
+	url := s.client.BasicUrl + "/v2/money-transfer/payers"
+
+	response, err := s.client.Get(url, params)
 	if err != nil {
 		return nil, err
 	}
@@ -34,10 +47,10 @@ func List(client *httpClient.AuthClient, params *ListParams) (*[]Model, error) {
 }
 
 // GetDetail return a payer detail for given id
-func GetDetail(client *httpClient.AuthClient, id int) (*Model, error) {
-	url := fmt.Sprintf("%s/v2/money-transfer/payers/%d", client.BasicUrl, id)
+func (s *server) GetDetail(id int) (*Model, error) {
+	url := fmt.Sprintf("%s/v2/money-transfer/payers/%d", s.client.BasicUrl, id)
 
-	response, err := client.Get(url, nil)
+	response, err := s.client.Get(url, nil)
 	if err != nil {
 		return nil, err
 	}

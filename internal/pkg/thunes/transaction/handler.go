@@ -8,11 +8,24 @@ import (
 	"net/http"
 )
 
-// Create return a new transaction with transfer values specified from a given quotation.
-func Create(client *httpClient.AuthClient, quotationId int, params *CreateParams) (*Model, error) {
-	url := fmt.Sprintf("%s/v2/money-transfer/quotations/%d/transactions", client.BasicUrl, quotationId)
+type Server interface {
+	Create(quotationId int, params *CreateParams) (*Model, error)
+	Confirm(transactionId uint64) (*Model, error)
+}
 
-	response, err := client.Post(url, params)
+type server struct {
+	client *httpClient.AuthClient
+}
+
+func NewServer(client *httpClient.AuthClient) Server {
+	return &server{client: client}
+}
+
+// Create return a new transaction with transfer values specified from a given quotation.
+func (s *server) Create(quotationId int, params *CreateParams) (*Model, error) {
+	url := fmt.Sprintf("%s/v2/money-transfer/quotations/%d/transactions", s.client.BasicUrl, quotationId)
+
+	response, err := s.client.Post(url, params)
 	if err != nil {
 		return nil, err
 	}
@@ -38,10 +51,10 @@ func Create(client *httpClient.AuthClient, quotationId int, params *CreateParams
 
 // Confirm a previously-created transaction to initiate processing.
 // return a given transaction
-func Confirm(client *httpClient.AuthClient, transactionId uint64) (*Model, error) {
-	url := fmt.Sprintf("%s/v2/money-transfer/transactions/%d/confirm", client.BasicUrl, transactionId)
+func (s *server) Confirm(transactionId uint64) (*Model, error) {
+	url := fmt.Sprintf("%s/v2/money-transfer/transactions/%d/confirm", s.client.BasicUrl, transactionId)
 
-	response, err := client.Post(url, nil)
+	response, err := s.client.Post(url, nil)
 	if err != nil {
 		return nil, err
 	}

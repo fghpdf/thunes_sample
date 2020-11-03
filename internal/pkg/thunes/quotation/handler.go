@@ -9,11 +9,24 @@ import (
 	"net/http"
 )
 
-// Create return a new quotation for a given source or destination value.
-func Create(client *httpClient.AuthClient, params *CreateParams) (*Model, error) {
-	url := client.BasicUrl + "/v2/money-transfer/quotations"
+type Server interface {
+	Create(params *CreateParams) (*Model, error)
+	Get(id int) (*Model, error)
+}
 
-	response, err := client.Post(url, params)
+type server struct {
+	client *httpClient.AuthClient
+}
+
+func NewServer(client *httpClient.AuthClient) Server {
+	return &server{client: client}
+}
+
+// Create return a new quotation for a given source or destination value.
+func (s *server) Create(params *CreateParams) (*Model, error) {
+	url := s.client.BasicUrl + "/v2/money-transfer/quotations"
+
+	response, err := s.client.Post(url, params)
 	if err != nil {
 		return nil, err
 	}
@@ -38,10 +51,10 @@ func Create(client *httpClient.AuthClient, params *CreateParams) (*Model, error)
 }
 
 // Get return information for a given quotation
-func Get(client *httpClient.AuthClient, id int) (*Model, error) {
-	url := fmt.Sprintf("%s/v2/money-transfer/quotations/%d", client.BasicUrl, id)
+func (s *server) Get(id int) (*Model, error) {
+	url := fmt.Sprintf("%s/v2/money-transfer/quotations/%d", s.client.BasicUrl, id)
 
-	response, err := client.Get(url, nil)
+	response, err := s.client.Get(url, nil)
 	if err != nil {
 		return nil, err
 	}

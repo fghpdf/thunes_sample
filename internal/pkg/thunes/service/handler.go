@@ -8,11 +8,23 @@ import (
 	"net/http"
 )
 
-// List return a list of all services available to the caller
-func List(client *httpClient.AuthClient, params *ListParams) (*[]Model, error) {
-	url := client.BasicUrl + "/v2/money-transfer/services"
+type Server interface {
+	List(params *ListParams) (*[]Model, error)
+}
 
-	response, err := client.Get(url, params)
+type server struct {
+	client *httpClient.AuthClient
+}
+
+func NewServer(client *httpClient.AuthClient) Server {
+	return &server{client: client}
+}
+
+// List return a list of all services available to the caller
+func (s *server) List(params *ListParams) (*[]Model, error) {
+	url := s.client.BasicUrl + "/v2/money-transfer/services"
+
+	response, err := s.client.Get(url, params)
 	if err != nil {
 		return nil, err
 	}
