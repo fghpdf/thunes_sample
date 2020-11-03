@@ -8,11 +8,23 @@ import (
 	"net/http"
 )
 
+type Server interface {
+	Send() (*Model, error)
+}
+
+type server struct {
+	client *httpClient.AuthClient
+}
+
+func NewServer(client *httpClient.AuthClient) Server {
+	return &server{client: client}
+}
+
 // Send ping check connectivity
 // 200 + status: ok is connectivity
-func Send(authClient *httpClient.AuthClient) (*Model, error) {
-	url := authClient.BasicUrl + "/ping"
-	response, err := authClient.Get(url, nil)
+func (s *server) Send() (*Model, error) {
+	url := s.client.BasicUrl + "/ping"
+	response, err := s.client.Get(url, nil)
 	if err != nil {
 		return nil, err
 	}

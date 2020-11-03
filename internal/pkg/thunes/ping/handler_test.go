@@ -18,7 +18,9 @@ func TestSend(t *testing.T) {
 		BasicUrl: service.URL,
 	}
 
-	res, err := Send(authClient)
+	svc := NewServer(authClient)
+
+	res, err := svc.Send()
 	if err != nil {
 		t.Error(err)
 	}
