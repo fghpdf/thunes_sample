@@ -92,15 +92,15 @@ func listSuccessMock(w http.ResponseWriter, r *http.Request) {
 				Name: "MobileWallet",
 			},
 			TransactionTypes: transactionType.TypeModel{
-				C2C: transactionType.InfoModel{
+				C2C: &transactionType.InfoModel{
 					MinimumTransactionAmount:       "0",
 					MaximumTransactionAmount:       "100",
 					CreditPartyIdentifiersAccepted: [][]string{{"msisdn"}},
 					RequiredSendingEntityFields:    nil,
 					RequiredReceivingEntityFields:  nil,
 					RequiredDocuments:              nil,
-					CreditPartyInformation:         creditParty.InfoModel{},
-					CreditPartyVerification:        creditParty.VerificationModel{},
+					CreditPartyInformation:         &creditParty.InfoModel{},
+					CreditPartyVerification:        &creditParty.VerificationModel{},
 				},
 			},
 		}
@@ -126,15 +126,15 @@ func getDetailSuccessMock(w http.ResponseWriter, r *http.Request) {
 			Name: "MobileWallet",
 		},
 		TransactionTypes: transactionType.TypeModel{
-			C2C: transactionType.InfoModel{
+			C2C: &transactionType.InfoModel{
 				MinimumTransactionAmount:       "0",
 				MaximumTransactionAmount:       "100",
 				CreditPartyIdentifiersAccepted: [][]string{{"msisdn"}},
 				RequiredSendingEntityFields:    nil,
 				RequiredReceivingEntityFields:  nil,
 				RequiredDocuments:              nil,
-				CreditPartyInformation:         creditParty.InfoModel{},
-				CreditPartyVerification:        creditParty.VerificationModel{},
+				CreditPartyInformation:         &creditParty.InfoModel{},
+				CreditPartyVerification:        &creditParty.VerificationModel{},
 			},
 		},
 	}

@@ -10,4 +10,9 @@ var (
 		Code:    "100100001",
 		Message: "list country error",
 	}
+
+	ERROR_LIST_PAYER = HttpErrorModel{
+		Code:    "100100002",
+		Message: "list payer error",
+	}
 )

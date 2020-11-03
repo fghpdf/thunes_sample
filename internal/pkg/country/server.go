@@ -27,15 +27,15 @@ func (s *server) List() (*[]ViewModel, error) {
 	}
 
 	viewCountries := make([]ViewModel, 0)
-	for _, country := range *countries {
-		info := countryLab.ByName(country.Name)
+	for _, c := range *countries {
+		info := countryLab.ByName(c.Name)
 		if info == countryLab.Unknown {
-			log.Errorf("[country][List]can not find the country %s\n", country.Name)
+			log.Errorf("[country][List]can not find the country %s\n", c.Name)
 			continue
 		}
 
 		viewCountry := ViewModel{
-			Name:     country.Name,
+			Name:     c.Name,
 			Currency: info.Currency().Alpha(),
 			Flag:     info.Emoji(),
 		}
