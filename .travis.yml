@@ -6,10 +6,6 @@ branches:
     - main
     - release
 
-go:
-  - "1.11"
-  - "1.11.x"
-
 env:
   - GO111MODULE=on
 

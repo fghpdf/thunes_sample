@@ -4,7 +4,7 @@ default:
 	echo ${PROJECT}
 
 unittest:
-	@go test -tags -cpu=1,2,4 -v ./...
+	@go test -cpu=1,2,4 -v ./...
 
 coverage:
 	@go test -race  ./... -coverprofile=coverage.txt -covermode=atomic
