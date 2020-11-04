@@ -1,5 +1,11 @@
 language: go
 
+branches:
+  only:
+    - develop
+    - main
+    - release
+
 go:
   - "1.11"
   - "1.11.x"
