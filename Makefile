@@ -12,4 +12,5 @@ coverage:
 mock:
 	@mockgen -source="internal/pkg/thunes/country/handler.go" -destination="test/mocks/thunes/country/handler.go" \
 	@mockgen -source="internal/pkg/thunes/payer/handler.go" -destination="test/mocks/thunes/payer/handler.go" \
-	@mockgen -source="internal/pkg/thunes/quotation/handler.go" -destination="test/mocks/thunes/quotation/handler.go"
+	@mockgen -source="internal/pkg/thunes/quotation/handler.go" -destination="test/mocks/thunes/quotation/handler.go" \
+	@mockgen -source="internal/pkg/thunes/transaction/handler.go" -destination="test/mocks/thunes/transaction/handler.go"
