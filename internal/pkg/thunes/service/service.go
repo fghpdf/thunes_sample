@@ -3,7 +3,7 @@ package service
 import "fghpdf.me/thunes_homework/internal/pkg/thunes/common"
 
 type Model struct {
-	Id   int    `json:"id"`
+	Id   uint64 `json:"id"`
 	Name string `json:"name"`
 }
 

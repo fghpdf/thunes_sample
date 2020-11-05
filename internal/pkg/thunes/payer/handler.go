@@ -10,7 +10,7 @@ import (
 
 type Server interface {
 	List(params *ListParams) (*[]Model, error)
-	GetDetail(id int) (*Model, error)
+	GetDetail(id uint64) (*Model, error)
 }
 
 type server struct {
@@ -47,7 +47,7 @@ func (s *server) List(params *ListParams) (*[]Model, error) {
 }
 
 // GetDetail return a payer detail for given id
-func (s *server) GetDetail(id int) (*Model, error) {
+func (s *server) GetDetail(id uint64) (*Model, error) {
 	url := fmt.Sprintf("%s/v2/money-transfer/payers/%d", s.client.BasicUrl, id)
 
 	response, err := s.client.Get(url, nil)

@@ -9,7 +9,7 @@ import (
 )
 
 type Server interface {
-	Create(quotationId int, params *CreateParams) (*Model, error)
+	Create(quotationId uint64, params *CreateParams) (*Model, error)
 	Confirm(transactionId uint64) (*Model, error)
 }
 
@@ -22,7 +22,7 @@ func NewServer(client *httpClient.AuthClient) Server {
 }
 
 // Create return a new transaction with transfer values specified from a given quotation.
-func (s *server) Create(quotationId int, params *CreateParams) (*Model, error) {
+func (s *server) Create(quotationId uint64, params *CreateParams) (*Model, error) {
 	url := fmt.Sprintf("%s/v2/money-transfer/quotations/%d/transactions", s.client.BasicUrl, quotationId)
 
 	response, err := s.client.Post(url, params)

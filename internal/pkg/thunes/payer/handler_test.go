@@ -50,7 +50,7 @@ func TestList(t *testing.T) {
 }
 
 func TestGetDetail(t *testing.T) {
-	payerId := 1
+	payerId := uint64(1)
 	url := fmt.Sprintf("/v2/money-transfer/payers/%d", payerId)
 	server := common.ServerMock(url, getDetailSuccessMock)
 	defer server.Close()
@@ -81,7 +81,7 @@ func listSuccessMock(w http.ResponseWriter, r *http.Request) {
 	payers := &[5]Model{}
 	for index := 0; index < 5; index++ {
 		payers[index] = Model{
-			Id:             index + 1,
+			Id:             uint64(index + 1),
 			Name:           fmt.Sprintf("Payer %d", index+1),
 			Precision:      0,
 			Increment:      "0.01",
@@ -115,7 +115,7 @@ func getDetailSuccessMock(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(path[len(path)-1])
 
 	payer := &Model{
-		Id:             id,
+		Id:             uint64(id),
 		Name:           "Payer One",
 		Precision:      0,
 		Increment:      "0.01",

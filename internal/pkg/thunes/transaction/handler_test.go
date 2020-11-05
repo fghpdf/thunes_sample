@@ -14,7 +14,7 @@ import (
 )
 
 func TestCreate(t *testing.T) {
-	quotationId := 1
+	quotationId := uint64(1)
 	url := fmt.Sprintf("/v2/money-transfer/quotations/%d/transactions", quotationId)
 	server := common.ServerMock(url, createSuccessMock)
 	defer server.Close()

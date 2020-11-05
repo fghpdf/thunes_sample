@@ -7,7 +7,7 @@ import (
 )
 
 type Model struct {
-	Id              int                     `json:"id"`
+	Id              uint64                  `json:"id"`
 	ExternalId      string                  `json:"external_id"` // External reference ID. This is the reference for this quotation from the external system.
 	Payer           payer.Model             `json:"payer"`
 	Mode            string                  `json:"mode"` // Quotation Mode
@@ -23,7 +23,7 @@ type Model struct {
 
 type CreateParams struct {
 	ExternalId      string                  `json:"external_id"`      // required, External reference ID
-	PayerId         int                     `json:"payer_id"`         // required, Payer ID
+	PayerId         uint64                  `json:"payer_id"`         // required, Payer ID
 	Mode            string                  `json:"mode"`             // required, Quotation Mode
 	TransactionType string                  `json:"transaction_type"` // required, transaction type
 	Source          amount.SourceModel      `json:"source"`           // required, source information

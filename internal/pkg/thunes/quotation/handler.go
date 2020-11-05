@@ -11,7 +11,7 @@ import (
 
 type Server interface {
 	Create(params *CreateParams) (*Model, error)
-	Get(id int) (*Model, error)
+	Get(id uint64) (*Model, error)
 }
 
 type server struct {
@@ -51,7 +51,7 @@ func (s *server) Create(params *CreateParams) (*Model, error) {
 }
 
 // Get return information for a given quotation
-func (s *server) Get(id int) (*Model, error) {
+func (s *server) Get(id uint64) (*Model, error) {
 	url := fmt.Sprintf("%s/v2/money-transfer/quotations/%d", s.client.BasicUrl, id)
 
 	response, err := s.client.Get(url, nil)

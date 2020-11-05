@@ -66,7 +66,7 @@ func TestCreate(t *testing.T) {
 }
 
 func TestGet(t *testing.T) {
-	quotationId := 1
+	quotationId := uint64(1)
 	url := fmt.Sprintf("/v2/money-transfer/quotations/%d", quotationId)
 	server := common.ServerMock(url, getSuccessMock)
 	defer server.Close()
@@ -117,7 +117,7 @@ func getSuccessMock(w http.ResponseWriter, r *http.Request) {
 	path := strings.Split(r.URL.Path, "/")
 	id, _ := strconv.Atoi(path[len(path)-1])
 
-	quotation.Id = id
+	quotation.Id = uint64(id)
 
 	res, _ := json.Marshal(quotation)
 	_, _ = w.Write(res)

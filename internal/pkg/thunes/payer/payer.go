@@ -8,7 +8,7 @@ import (
 )
 
 type Model struct {
-	Id               int                       `json:"id"`
+	Id               uint64                    `json:"id"`
 	Name             string                    `json:"name"`
 	Precision        int                       `json:"precision"` // Number of digits after decimal point
 	Increment        json.Number               `json:"increment"` // Unit of increment for transaction amounts
@@ -20,7 +20,7 @@ type Model struct {
 
 type ListParams struct {
 	common.PageParams
-	ServiceId      int    `json:"service_id,omitempty" url:"service_id,omitempty"`             // the ID of available service
+	ServiceId      uint64 `json:"service_id,omitempty" url:"service_id,omitempty"`             // the ID of available service
 	CountryIsoCode string `json:"country_iso_code,omitempty" url:"country_iso_code,omitempty"` // reference ISO 3166-1 alpha-3
 	Currency       string `json:"currency,omitempty" url:"currency,omitempty"`                 // reference ISO 4217
 }
