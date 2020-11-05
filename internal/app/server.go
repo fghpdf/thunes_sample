@@ -26,6 +26,7 @@ func startWebApp() {
 	router.GET("/payers", payer.List)
 	router.POST("/quotation", quotation.Create)
 	router.POST("/quotations/:id/transactions", transaction.Create)
+	router.POST("/transactions/:id/confirm", transaction.Confirm)
 
 	err := app.Run()
 	if err != nil {

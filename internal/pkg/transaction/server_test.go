@@ -46,7 +46,6 @@ func TestCreate(t *testing.T) {
 	mockClient.EXPECT().Create(quotationId, params).Return(mockCreatedTransaction, nil)
 
 	viewParams := &ViewCreateParams{
-		QuotationId:           quotationId,
 		CreditPartyIdentifier: params.CreditPartyIdentifier,
 		Sender:                params.Sender,
 		Beneficiary:           params.Beneficiary,
@@ -54,10 +53,38 @@ func TestCreate(t *testing.T) {
 	}
 
 	svc := NewServer(mockClient)
-	actual, err := svc.Create(viewParams)
+	actual, err := svc.Create(quotationId, viewParams)
 	if err != nil {
 		t.Error(err)
 	}
 
 	assert.Equal(t, mockCreatedTransaction.ExternalId, actual.ExternalId)
+}
+
+func TestConfirm(t *testing.T) {
+	transactionId := uint64(1)
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockCreatedTransaction := &transaction.Model{
+		Id:                 uint64(1),
+		Status:             "10000",
+		StatusMessage:      "CONFIRMED",
+		StatusClass:        "CONFIRMED",
+		StatusClassMessage: "2",
+		ExternalId:         "541411823484321405",
+		TransactionType:    "C2C",
+	}
+
+	mockClient := mockTransaction.NewMockServer(ctrl)
+	mockClient.EXPECT().Confirm(transactionId).Return(mockCreatedTransaction, nil)
+
+	svc := NewServer(mockClient)
+	actual, err := svc.Confirm(transactionId)
+	if err != nil {
+		t.Error(err)
+	}
+
+	assert.Equal(t, mockCreatedTransaction.ExternalId, actual.ExternalId)
+	assert.Equal(t, mockCreatedTransaction.Status, actual.Status)
 }

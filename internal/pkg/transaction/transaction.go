@@ -19,9 +19,16 @@ type ViewModel struct {
 }
 
 type ViewCreateParams struct {
-	QuotationId           uint64                      `json:"quotation_id" uri:"quotationId"`
 	CreditPartyIdentifier creditParty.IdentifierModel `json:"credit_party_identifier" form:"credit_party_identifier"` // required, Credit party identifier
 	Sender                user.SenderModel            `json:"sender" form:"sender"`                                   // C2C C2B required, Sender information
 	Beneficiary           user.BeneficiaryModel       `json:"beneficiary" form:"beneficiary"`                         // C2C B2C required, Beneficiary information
 	ExternalId            string                      `json:"external_id" form:"external_id"`                         // required, External ID
+}
+
+type ViewCreateUrlParams struct {
+	QuotationId uint64 `json:"quotation_id" uri:"id" binding:"required"`
+}
+
+type ViewConfirmUrlParams struct {
+	TransactionId uint64 `json:"transaction_id" uri:"id" binding:"required"`
 }

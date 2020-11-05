@@ -5,7 +5,8 @@ import (
 )
 
 type Server interface {
-	Create(params *ViewCreateParams) (*ViewModel, error)
+	Create(quotationId uint64, params *ViewCreateParams) (*ViewModel, error)
+	Confirm(id uint64) (*ViewModel, error)
 }
 
 type server struct {
@@ -18,7 +19,7 @@ func NewServer(thunesSvc transaction.Server) Server {
 	}
 }
 
-func (s *server) Create(params *ViewCreateParams) (*ViewModel, error) {
+func (s *server) Create(quotationId uint64, params *ViewCreateParams) (*ViewModel, error) {
 	createParams := &transaction.CreateParams{
 		CreditPartyIdentifier: params.CreditPartyIdentifier,
 		Sender:                params.Sender,
@@ -26,7 +27,29 @@ func (s *server) Create(params *ViewCreateParams) (*ViewModel, error) {
 		ExternalId:            params.ExternalId,
 	}
 
-	transferResult, err := s.thunesSvc.Create(params.QuotationId, createParams)
+	transferResult, err := s.thunesSvc.Create(quotationId, createParams)
+	if err != nil {
+		return nil, err
+	}
+
+	viewResult := &ViewModel{
+		Id:                 transferResult.Id,
+		Status:             transferResult.Status,
+		StatusMessage:      transferResult.StatusMessage,
+		StatusClass:        transferResult.StatusClass,
+		StatusClassMessage: transferResult.StatusClassMessage,
+		ExternalId:         transferResult.ExternalId,
+		ExternalCode:       transferResult.ExternalCode,
+		TransactionType:    transferResult.TransactionType,
+		CreationDate:       transferResult.CreationDate,
+		ExpirationDate:     transferResult.ExpirationDate,
+	}
+
+	return viewResult, nil
+}
+
+func (s *server) Confirm(id uint64) (*ViewModel, error) {
+	transferResult, err := s.thunesSvc.Confirm(id)
 	if err != nil {
 		return nil, err
 	}
