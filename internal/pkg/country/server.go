@@ -35,9 +35,10 @@ func (s *server) List() (*[]ViewModel, error) {
 		}
 
 		viewCountry := ViewModel{
-			Name:     c.Name,
-			Currency: info.Currency().Alpha(),
-			Flag:     info.Emoji(),
+			Name:           c.Name,
+			Currency:       info.Currency().Alpha(),
+			Flag:           info.Emoji(),
+			CountryIsoCode: c.IsoCode,
 		}
 
 		viewCountries = append(viewCountries, viewCountry)

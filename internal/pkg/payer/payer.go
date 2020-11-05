@@ -3,7 +3,7 @@ package payer
 import "fghpdf.me/thunes_homework/internal/pkg/thunes/transactionType"
 
 type ViewModel struct {
-	Id               int                       `json:"id"`
+	Id               uint64                    `json:"id"`
 	Name             string                    `json:"name"`
 	Currency         string                    `json:"currency"` // the currency payer can pay
 	CountryIsoCode   string                    `json:"country_iso_code"`

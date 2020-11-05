@@ -49,7 +49,7 @@ func (mr *MockServerMockRecorder) List(params interface{}) *gomock.Call {
 }
 
 // GetDetail mocks base method
-func (m *MockServer) GetDetail(id int) (*payer.Model, error) {
+func (m *MockServer) GetDetail(id uint64) (*payer.Model, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetDetail", id)
 	ret0, _ := ret[0].(*payer.Model)
@@ -61,4 +61,19 @@ func (m *MockServer) GetDetail(id int) (*payer.Model, error) {
 func (mr *MockServerMockRecorder) GetDetail(id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDetail", reflect.TypeOf((*MockServer)(nil).GetDetail), id)
+}
+
+// GetRate mocks base method
+func (m *MockServer) GetRate(id uint64) (*payer.RateModel, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetRate", id)
+	ret0, _ := ret[0].(*payer.RateModel)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetRate indicates an expected call of GetRate
+func (mr *MockServerMockRecorder) GetRate(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRate", reflect.TypeOf((*MockServer)(nil).GetRate), id)
 }

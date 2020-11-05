@@ -11,6 +11,7 @@ import (
 type Server interface {
 	List(params *ListParams) (*[]Model, error)
 	GetDetail(id uint64) (*Model, error)
+	GetRate(id uint64) (*RateModel, error)
 }
 
 type server struct {
@@ -69,4 +70,28 @@ func (s *server) GetDetail(id uint64) (*Model, error) {
 	}
 
 	return payer, nil
+}
+
+func (s *server) GetRate(id uint64) (*RateModel, error) {
+	url := fmt.Sprintf("%s/v2/money-transfer/payers/%d/rates", s.client.BasicUrl, id)
+
+	response, err := s.client.Get(url, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusOK {
+		errorMsg := fmt.Sprintf("get a payer rate request error, code: {%d}, message: {%s}",
+			response.StatusCode, response.Status)
+		return nil, errors.New(errorMsg)
+	}
+
+	rate := &RateModel{}
+	err = json.NewDecoder(response.Body).Decode(rate)
+	if err != nil {
+		return nil, err
+	}
+
+	return rate, nil
 }

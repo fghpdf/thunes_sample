@@ -19,7 +19,7 @@ func TestList(t *testing.T) {
 	mockPayers := make([]payer.Model, 0)
 	for index := 1; index <= 2; index++ {
 		p := payer.Model{
-			Id:             index,
+			Id:             uint64(index),
 			Name:           fmt.Sprintf("Payer %d", index),
 			Precision:      0,
 			Increment:      "0.01",

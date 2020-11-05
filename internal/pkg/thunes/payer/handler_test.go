@@ -77,6 +77,34 @@ func TestGetDetail(t *testing.T) {
 	}
 }
 
+func TestGetRate(t *testing.T) {
+	payerId := uint64(1)
+	url := fmt.Sprintf("/v2/money-transfer/payers/%d/rates", payerId)
+	server := common.ServerMock(url, getRateSuccessMock)
+	defer server.Close()
+
+	authClient := &httpClient.AuthClient{
+		Username: "mock API KEY",
+		Password: "mock API SECRET",
+		BasicUrl: server.URL,
+	}
+
+	svc := NewServer(authClient)
+
+	res, err := svc.GetRate(payerId)
+	if err != nil {
+		t.Error(err)
+	}
+
+	if res == nil {
+		t.Errorf("expected a payer but got nil\n")
+	}
+
+	if res.DestinationCurrency != "KEN" {
+		t.Errorf("expected KEN but got %s\n", res.DestinationCurrency)
+	}
+}
+
 func listSuccessMock(w http.ResponseWriter, r *http.Request) {
 	payers := &[5]Model{}
 	for index := 0; index < 5; index++ {
@@ -140,5 +168,23 @@ func getDetailSuccessMock(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res, _ := json.Marshal(payer)
+	_, _ = w.Write(res)
+}
+
+func getRateSuccessMock(w http.ResponseWriter, r *http.Request) {
+	rate := &RateModel{
+		DestinationCurrency: "KEN",
+		Rates: RateInfoModel{
+			SGD: &[]RateDetailModel{
+				{
+					SourceAmountMax: "100",
+					SourceAmountMin: "0",
+					WholesaleFxRate: "1.7",
+				},
+			},
+		},
+	}
+
+	res, _ := json.Marshal(rate)
 	_, _ = w.Write(res)
 }

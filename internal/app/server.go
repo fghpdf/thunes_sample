@@ -5,6 +5,7 @@ import (
 	"fghpdf.me/thunes_homework/internal/pkg/country"
 	"fghpdf.me/thunes_homework/internal/pkg/payer"
 	"fghpdf.me/thunes_homework/internal/pkg/ping"
+	"fghpdf.me/thunes_homework/internal/pkg/quotation"
 	"fghpdf.me/thunes_homework/internal/pkg/routers"
 	"log"
 )
@@ -22,6 +23,7 @@ func startWebApp() {
 	router.GET("/connect", ping.Handler)
 	router.GET("/countries", country.List)
 	router.GET("/payers", payer.List)
+	router.POST("/quotation", quotation.Create)
 
 	err := app.Run()
 	if err != nil {
