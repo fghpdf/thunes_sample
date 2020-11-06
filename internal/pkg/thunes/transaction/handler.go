@@ -11,6 +11,7 @@ import (
 type Server interface {
 	Create(quotationId uint64, params *CreateParams) (*Model, error)
 	Confirm(transactionId uint64) (*Model, error)
+	Get(transactionId uint64) (*Model, error)
 }
 
 type server struct {
@@ -61,11 +62,38 @@ func (s *server) Confirm(transactionId uint64) (*Model, error) {
 	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusOK {
-		errMsg := &httpClient.HttpErrorModel{}
-		_ = json.NewDecoder(response.Body).Decode(errMsg)
+		httpError := &httpClient.HttpErrorModel{}
+		_ = json.NewDecoder(response.Body).Decode(httpError)
 
 		errorMsg := fmt.Sprintf("confirm transaction request error, code: {%d}, message: {%s}",
-			response.StatusCode, errMsg.Errors)
+			response.StatusCode, httpError.Errors)
+		return nil, errors.New(errorMsg)
+	}
+
+	transaction := &Model{}
+	err = json.NewDecoder(response.Body).Decode(transaction)
+	if err != nil {
+		return nil, err
+	}
+
+	return transaction, nil
+}
+
+// Get return a given transaction
+func (s *server) Get(transactionId uint64) (*Model, error) {
+	url := fmt.Sprintf("%s/v2/money-transfer/transactions/%d", s.client.BasicUrl, transactionId)
+
+	response, err := s.client.Get(url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if response.StatusCode != http.StatusOK {
+		httpError := &httpClient.HttpErrorModel{}
+		_ = json.NewDecoder(response.Body).Decode(httpError)
+
+		errorMsg := fmt.Sprintf("confirm transaction request error, code: {%d}, message: {%s}",
+			response.StatusCode, httpError.Errors)
 		return nil, errors.New(errorMsg)
 	}
 

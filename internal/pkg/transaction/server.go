@@ -7,6 +7,7 @@ import (
 type Server interface {
 	Create(quotationId uint64, params *ViewCreateParams) (*ViewModel, error)
 	Confirm(id uint64) (*ViewModel, error)
+	Get(id uint64) (*ViewModel, error)
 }
 
 type server struct {
@@ -50,6 +51,28 @@ func (s *server) Create(quotationId uint64, params *ViewCreateParams) (*ViewMode
 
 func (s *server) Confirm(id uint64) (*ViewModel, error) {
 	transferResult, err := s.thunesSvc.Confirm(id)
+	if err != nil {
+		return nil, err
+	}
+
+	viewResult := &ViewModel{
+		Id:                 transferResult.Id,
+		Status:             transferResult.Status,
+		StatusMessage:      transferResult.StatusMessage,
+		StatusClass:        transferResult.StatusClass,
+		StatusClassMessage: transferResult.StatusClassMessage,
+		ExternalId:         transferResult.ExternalId,
+		ExternalCode:       transferResult.ExternalCode,
+		TransactionType:    transferResult.TransactionType,
+		CreationDate:       transferResult.CreationDate,
+		ExpirationDate:     transferResult.ExpirationDate,
+	}
+
+	return viewResult, nil
+}
+
+func (s *server) Get(id uint64) (*ViewModel, error) {
+	transferResult, err := s.thunesSvc.Get(id)
 	if err != nil {
 		return nil, err
 	}

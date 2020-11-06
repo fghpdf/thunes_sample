@@ -66,3 +66,28 @@ func Confirm(c *gin.Context) {
 
 	c.JSON(http.StatusOK, createdTransaction)
 }
+
+func Get(c *gin.Context) {
+	thunesSvc := transaction.NewServer(common.NewThunesClient())
+
+	svc := NewServer(thunesSvc)
+
+	var urlParams ViewConfirmUrlParams
+	err := c.ShouldBindUri(&urlParams)
+	if err != nil {
+		log.Errorf("[transaction][handler][Get] bind params error: %v\n", err)
+		errRes := common.ERROR_CREATE_TRANSACTION_BIND
+		c.JSON(http.StatusInternalServerError, errRes)
+		return
+	}
+
+	createdTransaction, err := svc.Get(urlParams.TransactionId)
+	if err != nil {
+		log.Errorf("[transaction][handler][Get] error: %v\n", err)
+		errRes := common.ERROR_CREATE_TRANSACTION
+		c.JSON(http.StatusInternalServerError, errRes)
+		return
+	}
+
+	c.JSON(http.StatusOK, createdTransaction)
+}

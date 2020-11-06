@@ -9,6 +9,9 @@ unittest:
 coverage:
 	@go test -race  ./... -coverprofile=coverage.txt -covermode=atomic
 
+integration_test:
+	@go test -v -tags=integration fghpdf.me/thunes_homework/internal/pkg/thunes
+
 mock:
 	@mockgen -source="internal/pkg/thunes/country/handler.go" -destination="test/mocks/thunes/country/handler.go" \
 	@mockgen -source="internal/pkg/thunes/payer/handler.go" -destination="test/mocks/thunes/payer/handler.go" \

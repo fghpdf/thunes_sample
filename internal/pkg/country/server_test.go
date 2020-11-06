@@ -54,5 +54,6 @@ func TestList(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	assert.Equal(t, *expectedCountries, *actualCountries)
+	assert.Equal(t, len(*expectedCountries), len(*actualCountries))
+	assert.Equal(t, (*expectedCountries)[0].Name, (*actualCountries)[0].Name)
 }

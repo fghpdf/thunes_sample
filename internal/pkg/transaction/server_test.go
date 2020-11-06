@@ -88,3 +88,31 @@ func TestConfirm(t *testing.T) {
 	assert.Equal(t, mockCreatedTransaction.ExternalId, actual.ExternalId)
 	assert.Equal(t, mockCreatedTransaction.Status, actual.Status)
 }
+
+func TestGet(t *testing.T) {
+	transactionId := uint64(1)
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockCreatedTransaction := &transaction.Model{
+		Id:                 uint64(1),
+		Status:             "10000",
+		StatusMessage:      "CONFIRMED",
+		StatusClass:        "CONFIRMED",
+		StatusClassMessage: "2",
+		ExternalId:         "541411823484321405",
+		TransactionType:    "C2C",
+	}
+
+	mockClient := mockTransaction.NewMockServer(ctrl)
+	mockClient.EXPECT().Get(transactionId).Return(mockCreatedTransaction, nil)
+
+	svc := NewServer(mockClient)
+	actual, err := svc.Get(transactionId)
+	if err != nil {
+		t.Error(err)
+	}
+
+	assert.Equal(t, mockCreatedTransaction.ExternalId, actual.ExternalId)
+	assert.Equal(t, mockCreatedTransaction.Status, actual.Status)
+}

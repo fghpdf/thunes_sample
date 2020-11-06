@@ -98,6 +98,34 @@ func TestConfirm(t *testing.T) {
 	}
 }
 
+func TestGet(t *testing.T) {
+	transactionId := uint64(1)
+	url := fmt.Sprintf("/v2/money-transfer/transactions/%d", transactionId)
+	server := common.ServerMock(url, getSuccessMock)
+	defer server.Close()
+
+	authClient := &httpClient.AuthClient{
+		Username: "mock API KEY",
+		Password: "mock API SECRET",
+		BasicUrl: server.URL,
+	}
+
+	svc := NewServer(authClient)
+
+	res, err := svc.Get(transactionId)
+	if err != nil {
+		t.Error(err)
+	}
+
+	if res == nil {
+		t.Errorf("expected a quotation but got nil\n")
+	}
+
+	if res.Id != transactionId {
+		t.Errorf("expected given id but got %d\n", res.Id)
+	}
+}
+
 func createSuccessMock(w http.ResponseWriter, r *http.Request) {
 	transaction := &Model{}
 
@@ -121,6 +149,18 @@ func confirmSuccessMock(w http.ResponseWriter, r *http.Request) {
 
 	path := strings.Split(r.URL.Path, "/")
 	id, _ := strconv.Atoi(path[len(path)-2])
+
+	transaction.Id = uint64(id)
+
+	res, _ := json.Marshal(transaction)
+	_, _ = w.Write(res)
+}
+
+func getSuccessMock(w http.ResponseWriter, r *http.Request) {
+	transaction := &Model{}
+
+	path := strings.Split(r.URL.Path, "/")
+	id, _ := strconv.Atoi(path[len(path)-1])
 
 	transaction.Id = uint64(id)
 
