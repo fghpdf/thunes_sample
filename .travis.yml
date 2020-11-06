@@ -7,8 +7,8 @@ branches:
     - release
 
 env:
-  - GO111MODULE=on
   global:
+    - GO111MODULE=on
     - THUNES_APIKEY="98d00d83-f68e-5157-a912-00f94f2e9a89"
     - THUNES_APISECRET="6f35be9c-952d-54a8-8020-99f2b9336d1a"
 
