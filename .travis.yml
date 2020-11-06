@@ -14,11 +14,11 @@ env:
 before_install:
   - echo "move"
   - mv $HOME/gopath/src/github.com/fghpdf/thunes_sample $HOME/gopath/src
-  - echo "unit test"
-  - make unittest
 
 script:
   - cd $HOME/gopath/src/thunes_sample
+  - echo "unit test"
+  - make unittest
   - echo "unit test coverage"
   - make coverage
   - echo "integration test"
