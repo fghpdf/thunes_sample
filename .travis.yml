@@ -21,3 +21,9 @@ script:
   - make coverage
   - echo "integration test"
   - make integration_test
+
+deploy:
+  provider: script
+  script: bash docker_push.sh
+  on:
+    branch: release
