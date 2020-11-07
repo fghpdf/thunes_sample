@@ -83,11 +83,11 @@ Duo to time limited, some detail isnot very well.
 
 This project can be better.
 
-- [] static string
-- [] more edge unit test
-- [] more error handler
-- [] more log
-- [] opentracing
-- [] Docker deploy
+- [ ] static string
+- [ ] more edge unit test
+- [ ] more error handler
+- [ ] more log
+- [ ] opentracing
+- [ ] Docker deploy
 
 and so on.
