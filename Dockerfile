@@ -12,4 +12,4 @@ COPY --from=base /usr/local/bin/app .
 
 EXPOSE 8080
 
-CMD ['app']
+CMD ["app"]
