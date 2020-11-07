@@ -53,6 +53,12 @@ All unit test is in `handler_test.go`.
 
 You can use command `go run main.go` to start a HTTP service.
 
+And yes, do not forget the auth API Key and Secret.
+
+They can be set by environment
+* THUNES_APIKEY
+* THUNES_APISECRET
+
 It will listen `:8080`.
 
 ### Test
