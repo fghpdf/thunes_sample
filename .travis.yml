@@ -1,5 +1,7 @@
 language: go
 
+services: docker
+
 branches:
   only:
     - develop
@@ -21,6 +23,9 @@ script:
   - make coverage
   - echo "integration test"
   - make integration_test
+
+before_deploy:
+  - docker build -t fghpdf/thunes_sample_backend .
 
 deploy:
   provider: script

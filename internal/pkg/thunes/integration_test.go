@@ -76,7 +76,7 @@ func testFlow(t *testing.T, msisdn string, expectedStatus string) {
 	assert.Equal(t, confirmedTransaction.Status, "20000")
 
 	// wait for completed
-	time.Sleep(6 * time.Second)
+	time.Sleep(8 * time.Second)
 
 	// Step five: get transaction status
 	finalTransaction, err := getTransaction(client, transaction.Id)
