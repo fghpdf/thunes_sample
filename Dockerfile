@@ -8,6 +8,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /usr/local/bin/app main.go
 FROM alpine as final
 
 WORKDIR /usr/local/bin
+COPY --from=base /go/src/app/config ./config
 COPY --from=base /usr/local/bin/app .
 
 EXPOSE 8080
