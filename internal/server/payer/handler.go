@@ -1,8 +1,8 @@
 package payer
 
 import (
-	"fghpdf.me/thunes_homework/internal/pkg/common"
 	"fghpdf.me/thunes_homework/internal/pkg/thunes/payer"
+	"fghpdf.me/thunes_homework/internal/server/common"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"net/http"
