@@ -2,12 +2,12 @@ package app
 
 import (
 	"fghpdf.me/thunes_homework/internal/pkg/config"
-	"fghpdf.me/thunes_homework/internal/pkg/country"
-	"fghpdf.me/thunes_homework/internal/pkg/payer"
-	"fghpdf.me/thunes_homework/internal/pkg/ping"
-	"fghpdf.me/thunes_homework/internal/pkg/quotation"
 	"fghpdf.me/thunes_homework/internal/pkg/routers"
-	"fghpdf.me/thunes_homework/internal/pkg/transaction"
+	"fghpdf.me/thunes_homework/internal/server/country"
+	"fghpdf.me/thunes_homework/internal/server/payer"
+	"fghpdf.me/thunes_homework/internal/server/ping"
+	"fghpdf.me/thunes_homework/internal/server/quotation"
+	"fghpdf.me/thunes_homework/internal/server/transaction"
 	"log"
 )
 
