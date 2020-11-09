@@ -1,7 +1,6 @@
 ## Thunes Money Transfer Backend
 
 [![Build Status](https://travis-ci.com/fghpdf/thunes_sample.svg?token=nEHz11y83KAa9EpLU95Y&branch=release)](https://travis-ci.com/fghpdf/thunes_sample)
-
 ---
 
 ### Overview
@@ -20,14 +19,15 @@ Root
 ├── internal
 │   ├── app
 │   └── pkg
-│       ├── common
 │       ├── config
+│       ├── routers
+│       ├── thunes    // thunes API client
+│   └── server
+│       ├── common
 │       ├── country
 │       ├── payer
 │       ├── ping
 │       ├── quotation
-│       ├── routers
-│       ├── thunes    // thunes API client
 │       └── transaction
 └── test
     └── mocks
