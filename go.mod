@@ -19,8 +19,7 @@ require (
 	github.com/sony/sonyflake v1.0.0
 	github.com/spf13/viper v1.7.1
 	github.com/ugorji/go v1.1.13 // indirect
-	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897 // indirect
-	golang.org/x/sys v0.0.0-20201029080932-201ba4db2418 // indirect
+	golang.org/x/crypto v0.1.0 // indirect
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 )
